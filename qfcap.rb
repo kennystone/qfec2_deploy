@@ -1,16 +1,7 @@
-
-
 role :libs, 'ec2-174-129-139-145.compute-1.amazonaws.com'
 ssh_options[:keys] = '/Users/kstone/.ec2/trial1.pem'
 set :user, 'root'
 set :use_sudo, false
-
-task :ls do 
-  run 'ls -al' do |channel, stream, data|
-    puts stream
-    puts data
-  end
-end
 
 task :checkout do
   capture 'svn export https://svn.sourceforge.net/svnroot/quickfix/trunk/quickfix /mnt/qf'

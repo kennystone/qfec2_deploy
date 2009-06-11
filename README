@@ -1,0 +1,38 @@
+tasks: launch, describe, stop, stop_all, checkout, make, run_at 
+
+normal workflow:     launch, checkout, make, run_at, stop
+additional helpers:  describe, stop_all
+
+cap launch -s build=
+  launches a new instance based on your build in the config file.  it will print 
+  the instance id, which is necessary for other steps
+
+cap checkout -s build=   -s inst_id=
+  checks out repo on instance 
+  repo specified in config file via build arg
+
+cap make -s inst_id=
+  makes repo on instance
+  repo specified in config file via build arg
+
+cap run_at -s inst_id=    -s build=
+  runs tests, dumps results to results_path
+  repo specified in config file via build arg
+
+cap stop -s inst_id
+  stops instance
+
+cap describe
+  describes all running instances to stdout
+
+cap stop_all
+  stops all instances
+
+NOTES:
+script assumes config file in location config/build.yml
+you will also need to specify capfile on command line: "-f capfile.rb" 
+
+
+
+
+

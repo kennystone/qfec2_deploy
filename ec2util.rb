@@ -12,7 +12,7 @@ class EC2Util
     ec2 = get_ec2( config )
     image_name = config['builds'][build]['image']
     image_id = config['images'][image_name]
-    i = ec2.launch_instances( image_id, :key_name=>config['ssh_key_name'], :user_data=>'build' )
+    i = ec2.launch_instances( image_id, :key_name=>config['ssh_key_name'] )
     return i[0][:aws_instance_id]
   end
 

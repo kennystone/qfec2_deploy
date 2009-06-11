@@ -1,0 +1,19 @@
+# !!!!!!!!!! DO NOT CHECK THIS IN WITH SECRET KEYS !!!!!!!!!!!!!!
+# !!!!!!!!!! DO NOT CHECK THIS IN WITH SECRET KEYS !!!!!!!!!!!!!!
+# !!!!!!!!!! DO NOT CHECK THIS IN WITH SECRET KEYS !!!!!!!!!!!!!!
+# !!!!!!!!!! DO NOT CHECK THIS IN WITH SECRET KEYS !!!!!!!!!!!!!!
+# !!!!!!!!!! DO NOT CHECK THIS IN WITH SECRET KEYS !!!!!!!!!!!!!!
+
+ssh_key: '/Users/kstone/.ec2/trial1.pem'
+access_key: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+secret_access_key: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+results_path: '.'
+
+builds:
+  fedora8_trunk:
+    desc:  'fedora core 8, gcc 4.1, 32-bit'
+    image: 'fedora8_32'
+    repo: 'https://svn.sourceforge.net/svnroot/quickfix/trunk/quickfix'
+
+images:
+  fedora8_32: 'ami-4308ee2a'

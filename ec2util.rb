@@ -43,7 +43,9 @@ class EC2Util
 
   def self.get_instance( inst_id, config )
     instances = get_ec2( config ).describe_instances
-    return instances.select{|i| i[:aws_instance_id]==inst_id }[0]
+    instance = instances.select{|i| i[:aws_instance_id]==inst_id }[0]
+    abort "could not find instance! inst_id: ${inst_id}" if instance.nil?
+    return instance
   end
 
   def self.stop_all( config )
@@ -54,7 +56,6 @@ class EC2Util
 
   def self.get_dns( inst_id, config )
     instance = get_instance( inst_id, config )
-    raise 'could not find instance!' if instance.nil?
     return instance[:dns_name]
   end
 end

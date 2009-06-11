@@ -12,10 +12,10 @@ cap checkout -s build=   -s inst_id=
   repo specified in config file via build arg
 
 cap make -s inst_id=
-  makes repo on instance
+  builds repo on instance
   repo specified in config file via build arg
 
-cap run_at -s inst_id= 
+cap run_at -s inst_id=   -s build
   runs tests, dumps results to results_path
   results_path specified in config file
 
@@ -30,6 +30,5 @@ cap stop_all
 
 NOTES:
 script assumes config file in location config/build.yml
-you will also need to specify capfile on command line: "-f qfcap.rb" 
 
 

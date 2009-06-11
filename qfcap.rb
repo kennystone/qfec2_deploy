@@ -26,12 +26,19 @@ task :launch do
   puts '-----------------------------------------'
 end
 
-task :describe_all do
+task :describe do
+  EC2Util.describe( @config )
+end
+
+task :stop do
+  abort 'inst_id arg required' if( inst_id.nil? )
+  EC2Util.stop( inst_id, @config )
+  sleep(10)
   EC2Util.describe( @config )
 end
 
 task :stop_all do
-  EC2Util.stop_all( @config )
+  EC2Util.stop( @config )
   sleep(10)
   EC2Util.describe( @config )
 end
@@ -43,11 +50,15 @@ task :checkout do
 end
 
 task :make do
+  abort 'inst_id arg required' if inst_id.nil?
+  role :libs, EC2Util.get_dns( inst_id, @config )
   capture 'cd /mnt/qf && ./bootstrap'
-  capture 'cd /mnt/qf && ./@configure'
+  capture 'cd /mnt/qf && ./configure'
   capture 'cd /mnt/qf && make'
 end
 
 task :run_at do
-  capture 'cd /mnt/qf/test && ./runat 5001'
+  abort 'inst_id arg required' if inst_id.nil?
+  role :libs, EC2Util.get_dns( inst_id, @config )
+  puts capture 'cd /mnt/qf/test && ./runat 5001'
 end

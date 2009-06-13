@@ -1,3 +1,9 @@
+required: capistrano, right_aws ruby gem, and amazon-e2c tools
+
+see example config file in config/build.yml
+
+cap -T to see your options
+----------------------------------------------------------------
 tasks: launch, describe, stop, stop_all, checkout, make, run_at 
 
 normal workflow:     launch, checkout, make, run_at, stop

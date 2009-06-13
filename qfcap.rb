@@ -5,9 +5,8 @@ require 'ec2config'
 @config = EC2Config.new( 'config/build.yml')
 @ec2 = EC2Util.new( @config.access_key, @config.secret_access_key )
 @build = build if exists?( :build )
-inst = @config.last_inst_id
+@inst = @config.last_inst_id
 
-role :libs, @ec2.get_dns( inst ) unless inst.nil?
 set :user, 'root'
 set :use_sudo, false
 ssh_options[:keys] = @config.key_path
@@ -15,7 +14,7 @@ ssh_options[:keys] = @config.key_path
 desc 'launch, checkout, make, run_at, stop (req: build)'
 task :do_build do
   launch
-  role :libs, @ec2.get_dns( @config.last_inst_id )
+  @inst = @config.last_inst_id
   checkout
   make
   run_at
@@ -41,26 +40,26 @@ end
 
 desc 'describes all running instances'
 task :describe do
+  role :libs, @ec2.get_dns( @inst )
   @ec2.describe
 end
 
 desc 'stops instance'
 task :stop do
   @ec2.stop( @config.pop_inst_id )
-  sleep(10)
   @ec2.describe
 end
 
 desc 'stops all instances'
 task :stop_all do
   @ec2.stop_all
-  sleep(3)
   @ec2.describe
-  system 'rm -rf inst_ids.txt'
+  system 'rm -rf inst_ids.yml'
 end
 
 desc 'checks out repo on instance'
 task :checkout do
+  role :libs, @ec2.get_dns( @inst )
   builddir = "build_#{Time.now.strftime('%Y%m%d-%H%M%S')}_#{rand(999999999)}"
   system "git clone #{@config.repo_for( @config.last_build )} #{builddir}"
   puts 'tar and upload repo to instance'
@@ -74,6 +73,7 @@ end
 
 desc 'builds repo on instance'
 task :make do
+  role :libs, @ec2.get_dns( @inst )
   @config.each_build_step do |step|
     capture "cd #{@config.build_loc}/build && #{step}"
   end
@@ -81,6 +81,7 @@ end
 
 desc 'runs acceptance tests'
 task :run_at do
+  role :libs, @ec2.get_dns( @inst )
   tr = ''
   @config.each_at_step do |step|
     tr += capture "cd #{@config.build_loc}/build && #{step}"

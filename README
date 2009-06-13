@@ -7,19 +7,19 @@ cap launch -s build=
   launches a new instance based on your build in the config file.  
   task will output the instance id, which is necessary for other tasks
 
-cap checkout -s build=   -s inst_id=
+cap checkout -s build=   
   checks out repo on instance 
   repo specified in config file via build arg
 
-cap make -s inst_id=
+cap make 
   builds repo on instance
   repo specified in config file via build arg
 
-cap run_at -s inst_id=   -s build
+cap run_at
   runs tests, dumps results to results_path
   results_path specified in config file
 
-cap stop -s inst_id
+cap stop 
   stops instance
 
 cap describe

@@ -4,16 +4,17 @@
 # !!!!!!!!!! DO NOT CHECK THIS IN WITH SECRET KEYS !!!!!!!!!!!!!!
 # !!!!!!!!!! DO NOT CHECK THIS IN WITH SECRET KEYS !!!!!!!!!!!!!!
 
-ssh_key: '/Users/kstone/.ec2/trial1.pem'
-access_key: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-secret_access_key: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+key_name: 'qfdeploy'
+key_path: '~/.ec2/qfdeploy.pem'
+access_key: 'xxxxxxxxx'
+secret_access_key: 'xxxxxxxxx'
 results_path: '.'
 
 builds:
   fedora8_trunk:
     desc:  'fedora core 8, gcc 4.1, 32-bit'
     image: 'fedora8_32'
-    repo: 'https://svn.sourceforge.net/svnroot/quickfix/trunk/quickfix'
+    repo: 'git://github.com/shanetrotter/qf-temp.git'
 
 images:
   fedora8_32: 'ami-4308ee2a'

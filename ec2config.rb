@@ -2,7 +2,7 @@ require 'rubygems'
 require 'yaml'
 
 class EC2Config
-  attr_reader :access_key, :secret_access_key, :key_name, :key_path
+  attr_reader :access_key, :secret_access_key, :key_name, :key_path, :build_loc
 
   ID_FILE = 'inst_ids.yml'
 
@@ -13,6 +13,9 @@ class EC2Config
     @key_name = @config['ec2']['key_name']
     @key_path = @config['ec2']['key_path']
     @id_file = ID_FILE
+    @build_steps = @config['build_steps']
+    @at_steps = @config['acceptance_test_steps']
+    @build_loc = '/mnt'
   end
 
   def repo_for( build )
@@ -52,6 +55,14 @@ class EC2Config
     return id['instance_id']
   end
 
+  def each_build_step
+    @build_steps.each { |step| yield step }
+  end
+
+  def each_at_step
+    @at_steps.each { |step| yield step }
+  end
+
 private
   def get_ids
     return [] if !File.exist?( @id_file )
@@ -61,4 +72,5 @@ private
   def make_yaml_entry( inst_id, build )
     {'instance_id'=>inst_id, 'build'=>build}
   end
+
 end

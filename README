@@ -9,7 +9,7 @@ tasks: launch, describe, stop, stop_all, checkout, build, run_at
 normal workflow:     launch, checkout, build, run_at, stop
 additional helpers:  describe, stop_all
 
-cap launch -s build=
+cap launch -S build=
   launches a new instance based on your build in the config file.  
   task will write instance id to inst_ids.yml and print to screen
   instance id is necessary for other tasks

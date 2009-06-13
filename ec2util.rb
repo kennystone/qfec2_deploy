@@ -14,7 +14,8 @@ class EC2Util
 
   def describe
     instances = @ec2.describe_instances
-    puts instances.size.to_s + ' total instances running'
+    tot_running = instances.select{|i| i[:aws_state]=='running' }.size
+    puts tot_running.to_s + ' total instances running'
     instances.each do |instance|
       puts '-------------------------------------'
       inst_to_s( instance )

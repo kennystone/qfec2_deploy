@@ -41,7 +41,7 @@ class EC2Util
   def get_instance( inst_id )
     instances = @ec2.describe_instances
     instance = instances.select{|i| i[:aws_instance_id]==inst_id }[0]
-    abort "could not find instance! inst_id: ${inst_id}" if instance.nil?
+    abort "could not find instance! inst_id: #{inst_id}" if instance.nil?
     return instance
   end
 

@@ -4,6 +4,7 @@ require 'ec2config'
 
 @config = EC2Config.new( 'config/build.yml')
 @ec2 = EC2Util.new( @config.access_key, @config.secret_access_key )
+@build = build if exists?( :build )
 inst = @config.last_inst_id
 
 role :libs, @ec2.get_dns( inst ) unless inst.nil?
@@ -11,10 +12,20 @@ set :user, 'root'
 set :use_sudo, false
 ssh_options[:keys] = @config.key_path
 
+desc 'launch, checkout, make, run_at, stop (req: build)'
+task :do_build do
+  launch
+  role :libs, @ec2.get_dns( @config.last_inst_id )
+  checkout
+  make
+  run_at
+  stop
+end
+
 desc 'launches a new instance (req arg: build)'
 task :launch do
-  inst_id = @ec2.start( @config.image_id_for( build ), @config.key_name )
-  @config.save_inst_id( inst_id, build )
+  inst_id = @ec2.start( @config.image_id_for( @build ), @config.key_name )
+  @config.save_inst_id( inst_id, @build )
   puts '-----------------------------------------'
   puts 'instance id: ' + inst_id.to_s
   puts '-----------------------------------------'
@@ -50,27 +61,30 @@ end
 
 desc 'checks out repo on instance'
 task :checkout do
-  qfdir = "qf_#{Time.now.strftime('%Y%m%d-%H%M%S')}_#{rand(999999999)}"
-  system "git clone #{@config.repo_for( @config.last_build )} #{qfdir}"
+  builddir = "build_#{Time.now.strftime('%Y%m%d-%H%M%S')}_#{rand(999999999)}"
+  system "git clone #{@config.repo_for( @config.last_build )} #{builddir}"
   puts 'tar and upload repo to instance'
   puts 'this may take a few minutes'
-  system "tar -cjf #{qfdir}.zip #{qfdir}"
-  upload( "#{qfdir}.zip", '/mnt/qf.zip', :via=>:scp ) 
-  capture "cd /mnt && tar -xjf qf.zip"
-  capture "mv /mnt/#{qfdir}/quickfix /mnt/qf"
-  system "rm -rf #{qfdir}*"
+  system "tar -cjf #{builddir}.zip #{builddir}"
+  upload( "#{builddir}.zip", "#{@config.build_loc}/build.zip", :via=>:scp ) 
+  capture "cd #{@config.build_loc} && tar -xjf build.zip"
+  capture "mv #{@config.build_loc}/#{builddir}/quickfix #{@config.build_loc}/build"
+  system "rm -rf #{builddir}*"
 end
 
 desc 'builds repo on instance'
 task :make do
-  capture 'cd /mnt/qf && ./bootstrap'
-  capture 'cd /mnt/qf && ./configure'
-  capture 'cd /mnt/qf && make'
+  @config.each_build_step do |step|
+    capture "cd #{@config.build_loc}/build && #{step}"
+  end
 end
 
 desc 'runs acceptance tests'
 task :run_at do
-  tr = capture 'cd /mnt/qf/test && ./runat 5001'
+  tr = ''
+  @config.each_at_step do |step|
+    tr += capture "cd #{@config.build_loc}/build && #{step}"
+  end
   puts '-----------------------------------------'
   puts 'test results'
   puts '-----------------------------------------'

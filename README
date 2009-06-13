@@ -4,29 +4,31 @@ see example config file in config/build.yml
 
 cap -T to see your options
 ----------------------------------------------------------------
-tasks: launch, describe, stop, stop_all, checkout, make, run_at 
+tasks: launch, describe, stop, stop_all, checkout, build, run_at 
 
-normal workflow:     launch, checkout, make, run_at, stop
+normal workflow:     launch, checkout, build, run_at, stop
 additional helpers:  describe, stop_all
 
 cap launch -s build=
   launches a new instance based on your build in the config file.  
-  task will output the instance id, which is necessary for other tasks
+  task will write instance id to inst_ids.yml and print to screen
+  instance id is necessary for other tasks
 
-cap checkout -s build=   
+cap checkout
   checks out repo on instance 
-  repo specified in config file via build arg
+  task uses most recent instance_id appended to inst_ids.yml
 
 cap make 
   builds repo on instance
-  repo specified in config file via build arg
+  task uses most recent instance_id appended to inst_ids.yml
 
 cap run_at
-  runs tests, dumps results to results_path
-  results_path specified in config file
+  runs tests, dumps results to screen
+  task uses most recent instance_id appended to inst_ids.yml
 
 cap stop 
   stops instance
+  task will delete most recent instance_id appended to inst_ids.yml
 
 cap describe
   describes all running instances to stdout
@@ -34,7 +36,19 @@ cap describe
 cap stop_all
   stops all instances
 
+----------------------------------------------------------------
+EXAMPLES:
+
+this will launch an instance, checkout the code, build the code, run acceptance
+tests, and stop the instance
+
+cap launch -s build=fedora8_32_trunk
+cap checkout
+cap make
+cap run_at
+cap stop
+
+----------------------------------------------------------------
 NOTES:
 script assumes config file in location config/build.yml
-
 

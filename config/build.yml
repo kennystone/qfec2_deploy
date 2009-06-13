@@ -4,11 +4,21 @@
 # !!!!!!!!!! DO NOT CHECK THIS IN WITH SECRET KEYS !!!!!!!!!!!!!!
 # !!!!!!!!!! DO NOT CHECK THIS IN WITH SECRET KEYS !!!!!!!!!!!!!!
 
-key_name: 'qfdeploy'
-key_path: '~/.ec2/qfdeploy.pem'
-access_key: 'xxxxxxxxx'
-secret_access_key: 'xxxxxxxxx'
-results_path: '.'
+ec2:
+  key_name: 'qfdeploy'
+  key_path: '~/.ec2/qfdeploy.pem'
+  access_key: 'xxxxxxxxxxxxxxx'
+  secret_access_key: 'xxxxxxxxxxxxxxx'
+
+build_steps:
+  - 'step 1'
+  - 'step 2'
+  - 'step 3'
+
+make_steps:
+  - 'step 4'
+  - 'step 5'
+  - 'step 6'
 
 builds:
   fedora8_trunk:

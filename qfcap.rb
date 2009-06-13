@@ -4,16 +4,17 @@ require 'ec2config'
 
 @config = EC2Config.new( 'config/build.yml')
 @ec2 = EC2Util.new( @config.access_key, @config.secret_access_key )
+inst = @config.last_inst_id
 
+role :libs, @ec2.get_dns( inst ) unless inst.nil?
 set :user, 'root'
 set :use_sudo, false
 ssh_options[:keys] = @config.key_path
-role :libs, @ec2.get_dns( @config.last_inst_id )
 
 desc 'launches a new instance (req arg: build)'
 task :launch do
   inst_id = @ec2.start( @config.image_id_for( build ), @config.key_name )
-  @config.save_inst_id( inst_id )
+  @config.save_inst_id( inst_id, build )
   puts '-----------------------------------------'
   puts 'instance id: ' + inst_id.to_s
   puts '-----------------------------------------'
@@ -42,15 +43,15 @@ end
 desc 'stops all instances'
 task :stop_all do
   @ec2.stop_all
-  sleep(10)
+  sleep(3)
   @ec2.describe
-  service 'rm -rf inst_ids.txt'
+  system 'rm -rf inst_ids.txt'
 end
 
-desc 'checks out repo on instance (req args: build)'
+desc 'checks out repo on instance'
 task :checkout do
   qfdir = "qf_#{Time.now.strftime('%Y%m%d-%H%M%S')}_#{rand(999999999)}"
-  system "git clone #{@config.repo_for( build )} #{qfdir}"
+  system "git clone #{@config.repo_for( @config.last_build )} #{qfdir}"
   puts 'tar and upload repo to instance'
   puts 'this may take a few minutes'
   system "tar -cjf #{qfdir}.zip #{qfdir}"

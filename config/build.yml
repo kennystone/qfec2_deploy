@@ -7,21 +7,19 @@
 ec2:
   key_name: 'qfdeploy'
   key_path: '~/.ec2/qfdeploy.pem'
-  access_key: 'xxxxxxxxxxxxxxx'
-  secret_access_key: 'xxxxxxxxxxxxxxx'
+  access_key: 'xxxx'
+  secret_access_key: 'xxxx'
 
 build_steps:
-  - 'step 1'
-  - 'step 2'
-  - 'step 3'
+  - './bootstrap'
+  - './configure'
+  - 'make'
 
-make_steps:
-  - 'step 4'
-  - 'step 5'
-  - 'step 6'
+acceptance_test_steps:
+  - 'cd test && ./runat 5001'
 
 builds:
-  fedora8_trunk:
+  trunk_fedora8:
     desc:  'fedora core 8, gcc 4.1, 32-bit'
     image: 'fedora8_32'
     repo: 'git://github.com/shanetrotter/qf-temp.git'

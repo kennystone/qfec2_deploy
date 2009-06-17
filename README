@@ -42,8 +42,8 @@ cap do_build -S build=
 ---------------------------------------------------------------------------
 EXAMPLES:
 
-this will launch an instance, checkout the code, build the code, run acceptance
-tests, and stop the instance
+this will launch an instance, checkout the code, build the code, 
+run acceptance tests, and stop the instance
 
 cap launch -S build=trunk_fedora8_32
 cap checkout
@@ -51,7 +51,7 @@ cap make
 cap run_at
 cap stop
 
-----------------------------------------------------------------
+---------------------------------------------------------------------------
 NOTES:
 script assumes config file in location config/build.yml
 

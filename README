@@ -4,9 +4,9 @@ see example config file in config/build.yml
 
 cap -T to see your options
 ----------------------------------------------------------------
-tasks: launch, describe, stop, stop_all, checkout, build, run_at 
+tasks: launch, describe, stop, stop_all, checkout, make, run_at 
 
-normal workflow:     launch, checkout, build, run_at, stop
+normal workflow:     launch, checkout, make, run_at, stop
 additional helpers:  describe, stop_all
 
 cap launch -S build=
@@ -42,7 +42,7 @@ EXAMPLES:
 this will launch an instance, checkout the code, build the code, run acceptance
 tests, and stop the instance
 
-cap launch -s build=fedora8_32_trunk
+cap launch -S build=trunk_fedora8_32
 cap checkout
 cap make
 cap run_at

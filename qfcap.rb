@@ -67,7 +67,7 @@ task :checkout do
   system "tar -cjf #{builddir}.zip #{builddir}"
   upload( "#{builddir}.zip", "#{@config.build_loc}/build.zip", :via=>:scp ) 
   capture "cd #{@config.build_loc} && tar -xjf build.zip"
-  capture "mv #{@config.build_loc}/#{builddir}/quickfix #{@config.build_loc}/build"
+  capture "mv #{@config.build_loc}/#{builddir}/ #{@config.build_loc}/build"
   system "rm -rf #{builddir}*"
 end
 

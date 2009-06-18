@@ -22,12 +22,12 @@ builds:
   trunk_fedora8:
     desc:  'fedora core 8, gcc 4.1, 32-bit'
     image: 'fedora8_32'
-    repo: 'git://github.com/shanetrotter/qf-temp.git'
+    repo: 'git://github.com/quickfix/quickfix.git'
 
   trunk_centos5_64:
     desc:  'centos 5.0, gcc 4.3, 64-bit'
     image: 'centos_5_0_64'
-    repo: 'git://github.com/shanetrotter/qf-temp.git'
+    repo: 'git://github.com/quickfix/quickfix.git'
 
 images:
   fedora8_32:    'ami-4308ee2a'

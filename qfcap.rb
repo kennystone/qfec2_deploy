@@ -40,7 +40,6 @@ end
 
 desc 'describes all running instances'
 task :describe do
-  role :libs, @ec2.get_dns( @inst )
   @ec2.describe
 end
 

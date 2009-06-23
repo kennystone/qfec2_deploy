@@ -7,7 +7,7 @@
 ec2:
   key_name: 'qfdeploy'
   key_path: '~/.ec2/qfdeploy.pem'
-  access_key: 'AKIAJTFMNQTVNOLEOOEA'
+  access_key: 'xxxx'
   secret_access_key: 'xxxx'
 
 build_steps:
@@ -21,14 +21,20 @@ acceptance_test_steps:
 builds:
   trunk_fedora8:
     desc:  'fedora core 8, gcc 4.1, 32-bit'
-    image: 'fedora8_32'
+    image: 'fedora8_32_gcc41'
     repo: 'git://github.com/quickfix/quickfix.git'
 
   trunk_centos5_64:
-    desc:  'centos 5.0, gcc 4.3, 64-bit'
-    image: 'centos_5_0_64'
+    desc:  'centos 5.0, gcc 4.1, 64-bit'
+    image: 'centos_5_0_64_gcc41'
+    repo: 'git://github.com/quickfix/quickfix.git'
+
+  trunk_centos4_64:
+    desc:  'centos 4.7, gcc 3.4, 64-bit'
+    image: 'centos_4_7_gcc34'
     repo: 'git://github.com/quickfix/quickfix.git'
 
 images:
-  fedora8_32:    'ami-4308ee2a'
-  centos_5_0_64: 'ami-754fa91c'
+  fedora8_32_gcc41:    'ami-4308ee2a'
+  centos_5_0_64_gcc41: 'ami-754fa91c'
+  centos_4_7_gcc34:    'ami-bfa140d6'

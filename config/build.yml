@@ -24,17 +24,23 @@ builds:
     image: 'fedora8_32_gcc41'
     repo: 'git://github.com/quickfix/quickfix.git'
 
-  trunk_centos5_64:
+  trunk_centos5_gcc41:
     desc:  'centos 5.0, gcc 4.1, 64-bit'
     image: 'centos_5_0_64_gcc41'
     repo: 'git://github.com/quickfix/quickfix.git'
 
-  trunk_centos4_64:
+  trunk_centos4_gcc41:
     desc:  'centos 4.7, gcc 3.4, 64-bit'
     image: 'centos_4_7_gcc34'
+    repo: 'git://github.com/quickfix/quickfix.git'
+
+  trunk_ubuntu_gcc43:
+    desc:  'ubuntu 9.04, gcc 4.3.3, 32-bit'
+    image: 'ubuntu_9_04_gcc433'
     repo: 'git://github.com/quickfix/quickfix.git'
 
 images:
   fedora8_32_gcc41:    'ami-4308ee2a'
   centos_5_0_64_gcc41: 'ami-754fa91c'
   centos_4_7_gcc34:    'ami-bfa140d6'
+  ubuntu_9_04_gcc433:  'ami-f3b2539a'

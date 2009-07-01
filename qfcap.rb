@@ -17,6 +17,7 @@ task :do_build do
   @inst = @config.last_inst_id
   checkout
   make
+  run_ut
   run_at
   stop
 end
@@ -83,6 +84,20 @@ task :run_at do
   role :libs, @ec2.get_dns( @inst )
   tr = ''
   @config.each_at_step do |step|
+    tr += capture "cd #{@config.build_loc}/build && #{step}"
+  end
+  puts '-----------------------------------------'
+  puts 'test results'
+  puts '-----------------------------------------'
+  puts tr
+  puts '-----------------------------------------'
+end
+
+desc 'runs unit tests'
+task :run_ut do
+  role :libs, @ec2.get_dns( @inst )
+  tr = ''
+  @config.each_ut_step do |step|
     tr += capture "cd #{@config.build_loc}/build && #{step}"
   end
   puts '-----------------------------------------'

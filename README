@@ -6,7 +6,7 @@ cap -T to see your options
 ---------------------------------------------------------------------------
 tasks: launch, describe, stop, stop_all, checkout, make, run_at, do_build
 
-normal workflow:     launch, checkout, make, run_at, stop
+normal workflow:     launch, checkout, make, run_ut, run_at, stop
 additional helpers:  do_build, describe, stop_all
 
 cap launch -S build=
@@ -20,6 +20,10 @@ cap checkout
 
 cap make 
   builds repo on instance
+  task uses most recent instance_id appended to inst_ids.yml
+
+cap run_ut
+  runs tests, dumps results to screen
   task uses most recent instance_id appended to inst_ids.yml
 
 cap run_at
@@ -45,7 +49,7 @@ EXAMPLES:
 this will launch an instance, checkout the code, build the code, 
 run acceptance tests, and stop the instance
 
-cap launch -S build=trunk_fedora8_32
+cap launch -S build=trunk_centos4_gcc34
 cap checkout
 cap make
 cap run_at

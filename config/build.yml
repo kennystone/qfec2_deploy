@@ -7,13 +7,16 @@
 ec2:
   key_name: 'qfdeploy'
   key_path: '~/.ec2/qfdeploy.pem'
-  access_key: 'xxxx'
-  secret_access_key: 'xxxx'
+  access_key: 'AKIAJTFMNQTVNOLEOOEA'
+  secret_access_key: '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'
 
 build_steps:
   - './bootstrap'
   - './configure'
   - 'make'
+
+unit_test_steps:
+  - 'cd test && ./runut 5002'
 
 acceptance_test_steps:
   - 'cd test && ./runat 5001'
@@ -29,7 +32,7 @@ builds:
     image: 'centos_5_0_64_gcc41'
     repo: 'git://github.com/quickfix/quickfix.git'
 
-  trunk_centos4_gcc41:
+  trunk_centos4_gcc34:
     desc:  'centos 4.7, gcc 3.4, 64-bit'
     image: 'centos_4_7_gcc34'
     repo: 'git://github.com/quickfix/quickfix.git'

@@ -15,6 +15,7 @@ class EC2Config
     @id_file = ID_FILE
     @build_steps = @config['build_steps']
     @at_steps = @config['acceptance_test_steps']
+    @ut_steps = @config['unit_test_steps']
     @build_loc = '/mnt'
   end
 
@@ -61,6 +62,10 @@ class EC2Config
 
   def each_at_step
     @at_steps.each { |step| yield step }
+  end
+
+  def each_ut_step
+    @ut_steps.each { |step| yield step }
   end
 
 private

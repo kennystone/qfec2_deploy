@@ -8,7 +8,7 @@ ec2:
   key_name: 'qfdeploy'
   key_path: '~/.ec2/qfdeploy.pem'
   access_key: 'AKIAJTFMNQTVNOLEOOEA'
-  secret_access_key: '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'
+  secret_access_key: 'xxxx'
 
 build_steps:
   - './bootstrap'
@@ -42,8 +42,15 @@ builds:
     image: 'ubuntu_9_04_gcc433'
     repo: 'git://github.com/quickfix/quickfix.git'
 
+  trunk_win:
+    desc:  'windows trial'
+    image: 'win_server2003'
+    repo: 'git://github.com/quickfix/quickfix.git'
+
 images:
   fedora8_32_gcc41:    'ami-4308ee2a'
   centos_5_0_64_gcc41: 'ami-754fa91c'
   centos_4_7_gcc34:    'ami-bfa140d6'
   ubuntu_9_04_gcc433:  'ami-f3b2539a'
+  win_server2003:      'ami-7d886914'
+
